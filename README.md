@@ -14,7 +14,8 @@ class YourElement extends HTMLElement {
     }
 }
 const registry = new CustomElementRegistry();
-registry[enhancementRegistryKey] = new CustomEnhancementRegistry();
+const customEnhancementRegistry = new CustomEnhancementRegistry();
+registry[enhancementRegistryKey] = customEnhancementRegistry;
 registry.define('your-element', YourElement, {});
 ```
 
