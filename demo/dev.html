@@ -7,7 +7,7 @@
 </head>
 <body>
     <div id=outer>
-
+        <my-element></my-element>
         <div id=inner>
             Hello World
         </div>
@@ -18,10 +18,26 @@
                 super();
                 const shadow = this.attachShadow({mode: 'open'});
                 const div = document.createElement('div');
-                div.textContent = 'Hello from Shadow DOM';
+                div.textContent = 'Hello from Outer Shadow DOM';
                 shadow.appendChild(div);
             }
         }
+        customElements.define('my-element', MyElement);
+
+        class YourElement extends HTMLElement {
+            constructor() {
+                super();
+                const shadow = this.attachShadow({mode: 'open'});
+                const div = document.createElement('div');
+                div.textContent = 'Hello from Inner Shadow DOM';
+                shadow.appendChild(div);
+            }
+        }
+        const registry = new CustomElementRegistry();
+        registry.define('your-element', YourElement, {});
+        inner.attachShadow({mode: 'open', customElements: registry});
+        const yourElement = document.createElement('your-element');
+        inner.shadowRoot.appendChild(yourElement);
     </script>
 </body>
 </html>
